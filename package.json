@@ -1,0 +1,42 @@
+{
+  "name": "angular-tabset",
+  "version": "1.0.0",
+  "description": "angular tabset for bootstrap",
+  "main": "src/ourpalm-tabset.js",
+  "scripts": {
+    "start": "http-server -a 0.0.0.0 -p 8000 -c-1 ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lishichao1002/angular-tabset.git"
+  },
+  "keywords": [
+    "angular",
+    "bootstrap",
+    "tabset"
+  ],
+  "dependencies": {
+    "angular": "1.5.7",
+    "bootstrap": "3.3.7",
+    "jquery": "1.11.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "6.5.1",
+    "babel-core": "6.14.0",
+    "babel-loader": "6.2.5",
+    "babel-preset-es2015": "6.14.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "http-server": "0.9.0",
+    "ng-annotate-webpack-plugin": "0.1.3",
+    "webpack": "1.14.0",
+    "style-loader": "0.13.1",
+    "css-loader": "0.23.1"
+  },
+  "author": "lishichao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lishichao1002/angular-tabset/issues"
+  },
+  "homepage": "https://github.com/lishichao1002/angular-tabset#readme"
+}

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>angular table</title>
+    <!--<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>-->
+    <!--<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>-->
+    <!--<script src="http://cdn.bootcss.com/angular.js/1.5.6/angular.min.js"></script>-->
+    <!--<link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">-->
+    <!--<link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css" rel="stylesheet">-->
+    <!--<link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">-->
+
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/angular/angular.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <script src="../src/ourpalm-tabset.js"></script>
+    <link href="../src/ourpalm-tabset.css" rel="stylesheet">
+</head>
+<body ng-controller="TestController as vm">
+
+<h1>Ourpalm Tabs</h1>
+
+<section class="content">
+    <p>
+        <button ng-click="vm.addTab();">add tab</button>
+        <button ng-click="vm.getTabs();">get tabs</button>
+        <button ng-click="vm.getOptions();">get getOptions</button>
+    </p>
+    <p ng-init="vm.vertical = 'top';">
+        <button ng-click="vm.vertical = 'top';">top</button>
+        <button ng-click="vm.vertical = 'bottom';">bottom</button>
+        <button ng-click="vm.vertical = 'left';">left</button>
+        <button ng-click="vm.vertical = 'right';">right</button>
+    </p>
+    <p>
+        <input type="text" ng-model="vm.insertTabPosition" placeholder="insert tab position">
+        <button ng-click="vm.insertTab();">insert tab</button>
+    </p>
+    <p>
+        <input type="text" ng-model="vm.disabledTabId" placeholder="tab id">
+        <button ng-click="vm.disabledTab();">disabled tab</button>
+    </p>
+    <p>
+        <input type="text" ng-model="vm.enabledTabId" placeholder="tab id">
+        <button ng-click="vm.enabledTab();">enabledTab tab</button>
+    </p>
+    <p>
+        <input type="text" ng-model="vm.closeTabId" placeholder="tab id">
+        <button ng-click="vm.closeTab();">closeTab tab</button>
+    </p>
+    <p>
+        <input type="text" ng-model="vm.selectTabId" placeholder="tab id">
+        <button ng-click="vm.selectTab();">selectTab tab</button>
+    </p>
+    <p>
+        <input type="text" ng-model="vm.getTabId" placeholder="tab id">
+        <button ng-click="vm.getTab();">getTab tab</button>
+    </p>
+
+    <hr>
+
+    <ourpalm-tabset tabset="vm.tabset" vertical="vm.vertical" on-add="vm.onAdd(tab);" on-close="vm.onClose(tab);" on-select="vm.onSelect(tab);" on-unselect="vm.onUnselect(tab);">
+        <ourpalm-tab header="首页" closable="true">
+            首页内容
+            <input ng-model="aaa"> {{aaa}}
+        </ourpalm-tab>
+        <ourpalm-tab header="第二页标题" disabled="false" lazy="true" closable="true" selected="true">
+            第二页内容
+            <input ng-model="aaa"> {{aaa}}
+        </ourpalm-tab>
+        <ourpalm-tab header="第三页标题" disabled="false" lazy="false" closable="true">
+            第三页内容
+        </ourpalm-tab>
+    </ourpalm-tabset>
+
+</section>
+
+</body>
+</html>
+<script>
+    (function (angular) {
+
+        angular
+            .module('app', ['ourpalm.tabset'])
+
+            .controller('TestController', function (OurpalmTabset, $timeout) {
+                var vm = this;
+                vm.tabset = new OurpalmTabset({
+                    // onAdd: function (tab) {
+                    //     console.info('add', tab);
+                    // },
+                    // onClose: function (tab) {
+                    //     console.info('close', tab);
+                    // },
+                    // onSelect: function (tab) {
+                    //     console.info('select', tab);
+                    // },
+                    // onUnselect: function (tab) {
+                    //     console.info('unselect', tab);
+                    // }
+                });
+
+                console.info(this.tabset);
+
+                vm.addTab = function () {
+                    vm.tabset.addTab({
+                        header: '动态tab页',
+                        disabled: false,
+                        lazy: true,
+                        body: '<dynamic-tabs></dynamic-tabs>',
+                        selected: true,
+                        closed: false,
+                        closable: true
+                    });
+                };
+
+                vm.insertTab = function () {
+                    vm.tabset.insertTab({
+                        header: '动态tab页',
+                        disabled: false,
+                        lazy: true,
+                        body: '<dynamic-tabs></dynamic-tabs>',
+                        selected: true,
+                        closed: false,
+                        closable: true
+                    }, vm.insertTabPosition);
+                };
+
+                vm.disabledTab = function () {
+                    vm.tabset.disabledTab(vm.disabledTabId);
+                };
+
+                vm.enabledTab = function () {
+                    vm.tabset.enabledTab(vm.enabledTabId);
+                };
+
+                vm.closeTab = function () {
+                    vm.tabset.closeTab(vm.closeTabId);
+                };
+
+                vm.selectTab = function () {
+                    vm.tabset.selectTab(vm.selectTabId);
+                };
+
+                vm.getTab = function () {
+                    var tab = vm.tabset.getTab(vm.getTabId);
+                    console.log('get tab', tab);
+                };
+
+                vm.getTabs = function () {
+                    var tabs = vm.tabset.getTabs();
+                    console.log('get tabs', tabs);
+                };
+
+                vm.getOptions = function () {
+                    var getOptions = vm.tabset.getOptions();
+                    console.log('get getOptions', getOptions);
+                };
+            })
+
+            .component('dynamicTabs', {
+                template: '<h1>Dynamic Tabs</h1>',
+                controller: function () {
+                    console.info('dynamic tab');
+                }
+            })
+
+    })(angular);
+</script>
